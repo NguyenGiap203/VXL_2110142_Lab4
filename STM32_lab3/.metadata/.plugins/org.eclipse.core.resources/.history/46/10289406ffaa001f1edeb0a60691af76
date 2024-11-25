@@ -100,9 +100,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  fsm_automatic();
-	  fsm_manual();
-	  fsm_setting();
+	  fsm_automatic_run();
+	  fsm_manual_run();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

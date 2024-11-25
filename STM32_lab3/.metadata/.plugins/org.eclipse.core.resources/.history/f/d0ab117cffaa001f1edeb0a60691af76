@@ -8,7 +8,7 @@
 #include "software_timer.h"
 #include "main.h"
 
-#define MAX_COUNTER 5
+#define MAX_COUNTER 1
 #define TIMER_TICK 10 // chu ky cua ham timer interrupt
 
 int timer_counter[MAX_COUNTER];
