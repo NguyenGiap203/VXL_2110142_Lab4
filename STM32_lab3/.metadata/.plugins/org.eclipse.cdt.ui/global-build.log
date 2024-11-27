@@ -1,19 +1,19 @@
-16:57:46 **** Incremental Build of configuration Debug for project Buttons ****
+18:33:27 **** Incremental Build of configuration Debug for project Buttons ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/fsm_manual.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/fsm_manual.d" -MT"Core/Src/fsm_manual.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/fsm_manual.o"
+arm-none-eabi-gcc "../Core/Src/fsm_setting.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/fsm_setting.d" -MT"Core/Src/fsm_setting.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/fsm_setting.o"
 arm-none-eabi-gcc -o "Buttons.elf" @"objects.list"   -mcpu=cortex-m3 -T"E:\BKU\Se241\CO3009_MM\Experiments\L06_2110142_Lab3\STM32_lab3\Buttons\STM32F103C6UX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Buttons.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Buttons.elf
  
 arm-none-eabi-size   Buttons.elf 
 arm-none-eabi-objdump -h -S  Buttons.elf  > "Buttons.list"
 arm-none-eabi-objcopy  -O ihex  Buttons.elf  "Buttons.hex"
-   text	   data	    bss	    dec	    hex	filename
-   7600	     20	   1660	   9280	   2440	Buttons.elf
 arm-none-eabi-objcopy  -O binary  Buttons.elf  "Buttons.bin"
+   text	   data	    bss	    dec	    hex	filename
+  10200	     88	   1736	  12024	   2ef8	Buttons.elf
 Finished building: default.size.stdout
  
-Finished building: Buttons.hex
 Finished building: Buttons.bin
+Finished building: Buttons.hex
  
  
 Finished building: Buttons.list

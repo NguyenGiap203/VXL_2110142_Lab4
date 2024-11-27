@@ -1,0 +1,79 @@
+/*
+ * fsm_automatic.c
+ *
+ *  Created on: Nov 11, 2024
+ *      Author: NGUYEN GIAP
+ */
+
+#include "fsm_automatic.h"
+#include "main.h"
+
+
+void fsm_automatic(){
+	switch(status){
+	case INIT:
+		clearAllLeds();
+
+		status = RED_GREEN;
+		setTimer(1, 5000);
+		setTimer(2, 3000);
+		break;
+	case RED_GREEN:
+		setRed1();
+		setGreen2();
+
+		if(isButtonPressed(0) == 1){
+			status = NORMAL;
+		}
+
+		if(isTimerExpired(1) == 1 || isTimerExpired(2) == 1){
+
+			status = RED_YELLOW;
+			setTimer(2, 2000);
+		}
+		break;
+	case RED_YELLOW:
+		setRed1();
+		setYellow2();
+
+		if(isButtonPressed(0) == 1){
+			status = NORMAL;
+		}
+
+		if(isTimerExpired(2) == 1){
+			status = GREEN_RED;
+			setTimer(1, 3000);
+			setTimer(2, 5000);
+		}
+		break;
+	case GREEN_RED:
+		setGreen1();
+		setRed2();
+
+		if(isButtonPressed(0) == 1){
+			status = NORMAL;
+		}
+
+		if(isTimerExpired(1) == 1){
+			status = YELLOW_RED;
+			setTimer(1, 2000);
+		}
+		break;
+	case YELLOW_RED:
+		setYellow1();
+		setRed2();
+
+		if(isButtonPressed(0) == 1){
+			status = NORMAL;
+		}
+
+		if(isTimerExpired(1) == 1){
+			status = RED_GREEN;
+			setTimer(1, 5000);
+			setTimer(2, 3000);
+		}
+		break;
+	default:
+		break;
+	}
+}

@@ -8,8 +8,5 @@
 #ifndef INC_FSM_SETTING_H_
 #define INC_FSM_SETTING_H_
 
-void set_red(){
-
-}
-
+void fsm_setting();
 #endif /* INC_FSM_SETTING_H_ */

@@ -1,0 +1,25 @@
+/*
+ * fsm_setting.c
+ *
+ *  Created on: Nov 11, 2024
+ *      Author: NGUYEN GIAP
+ */
+
+#include "fsm_setting.h"
+
+void fsm_setting(){
+	switch(status){
+	case NORMAL:
+		break;
+	case SET_RED:
+		break;
+	case SET_YELLOW:
+		break;
+	case SET_GREEN:
+		break;
+	case CHECK_VALID:
+		break;
+	default:
+		break;
+	}
+}

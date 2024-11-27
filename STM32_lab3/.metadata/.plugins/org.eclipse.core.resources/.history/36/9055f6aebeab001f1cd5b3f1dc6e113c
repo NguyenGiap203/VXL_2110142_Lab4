@@ -1,0 +1,70 @@
+/*
+ * fsm_setting.c
+ *
+ *  Created on: Nov 11, 2024
+ *      Author: NGUYEN GIAP
+ */
+
+#include "fsm_setting.h"
+#include "global.h"
+
+
+void fsm_setting(){
+	switch(status){
+	case NORMAL:
+		if(isButtonPressed(0) == 1){
+			status = SET_RED;
+		}
+		if(isButtonPressed(1)); //do nothing
+		if(isButtonPressed(2) == 1){
+			status = INIT;
+
+			redCount = redCountInit;
+			yellowCount = yellowCountInit;
+			greenCount = greenCountInit;
+		}
+		break;
+	case SET_RED:
+		if(isButtonPressed(0) == 1){
+			status = SET_YELLOW;
+		}
+		if(isButtonPressed(1) == 1){
+			redCount++;
+			while (redCount < 1) redCount += 99;
+			while (redCount > 99) redCount -= 99;
+		}
+		if(isButtonPressed(2) == 1){
+			status = INIT;
+		}
+
+		break;
+	case SET_YELLOW:
+		if(isButtonPressed(0) == 1){
+			status = SET_GREEN;
+		}
+		if(isButtonPressed(1) == 1){
+			yellowCount++;
+			while (yellowCount < 1) yellowCount += 99;
+			while (yellowCount > 99) yellowCount -= 99;
+		}
+		if(isButtonPressed(2) == 1){
+			status = INIT;
+		}
+		break;
+	case SET_GREEN:
+		if(isButtonPressed(0) == 1){
+			status = NORMAL;
+		}
+		if(isButtonPressed(1) == 1){
+			greenCount++;
+			while (greenCount < 1) greenCount += 99;
+			while (greenCount > 99) greenCount -= 99;
+		}
+		if(isButtonPressed(2) == 1){
+			status = INIT;
+		}
+		break;
+	default:
+		break;
+	}
+}

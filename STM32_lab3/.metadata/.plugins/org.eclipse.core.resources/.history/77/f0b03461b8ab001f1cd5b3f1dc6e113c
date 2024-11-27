@@ -1,0 +1,48 @@
+/*
+ * fsm_setting.c
+ *
+ *  Created on: Nov 11, 2024
+ *      Author: NGUYEN GIAP
+ */
+
+#include "fsm_setting.h"
+
+
+
+void fsm_setting(){
+	switch(status){
+	case NORMAL:
+		if(isButtonPressed(0) == 1){
+			status = SET_RED;
+		}
+		if(isButtonPressed(1)); //do nothing
+		if(isButtonPressed(2) == 1){
+			status = INIT;
+
+			redTime = redTimeInit;
+			yellowTime = yellowTimeInit;
+			greenTime = greenTimeInit;
+		}
+		break;
+	case SET_RED:
+		if(isButtonPressed(0) == 1){
+			status = SET_YELLOW;
+		}
+
+		break;
+	case SET_YELLOW:
+		if(isButtonPressed(0) == 1){
+			status = SET_GREEN;
+		}
+
+		break;
+	case SET_GREEN:
+		if(isButtonPressed(0) == 1){
+			status = SET_NORMAL;
+		}
+
+		break;
+	default:
+		break;
+	}
+}

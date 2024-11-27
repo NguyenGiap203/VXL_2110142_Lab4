@@ -24,8 +24,10 @@
 /* USER CODE BEGIN Includes */
 #include "software_timer.h"
 #include "button.h"
+#include "global.h"
 #include "fsm_automatic.h"
-#include "fsm_manual.h"
+#include "fsm_setting.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,6 +96,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
   status = INIT;
+//  setTimer(0, 20); // use for led blink
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -101,7 +104,7 @@ int main(void)
   while (1)
   {
 	  fsm_automatic();
-	  fsm_manual();
+//	  fsm_manual();
 	  fsm_setting();
     /* USER CODE END WHILE */
 
@@ -212,10 +215,10 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, EN0_Pin|EN1_Pin|EN2_Pin|EN3_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : BUT1_Pin BUT2_Pin BUT3_Pin */
-  GPIO_InitStruct.Pin = BUT1_Pin|BUT2_Pin|BUT3_Pin;
+  /*Configure GPIO pins : BUT1_Pin BUT2_Pin BUT3_Pin PA4 */
+  GPIO_InitStruct.Pin = BUT1_Pin|BUT2_Pin|BUT3_Pin|GPIO_PIN_4;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SEG0_Pin SEG1_Pin SEG2_Pin RED1_Pin
@@ -243,7 +246,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timerRun();
-//	getKeyInput();
+	getKeyInput();
 }
 /* USER CODE END 4 */
 

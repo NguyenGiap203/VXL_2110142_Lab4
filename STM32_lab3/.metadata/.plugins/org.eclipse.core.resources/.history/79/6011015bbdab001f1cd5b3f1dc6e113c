@@ -1,0 +1,23 @@
+/*
+ * global.c
+ *
+ *  Created on: Nov 11, 2024
+ *      Author: NGUYEN GIAP
+ */
+
+#include "global.h"
+int status = 0;
+
+const int redTimeInit = 5;
+const int yellowTimeInit = 2;
+const int greenTimeInit = 3;
+
+int redCount = redTimeInit;
+int yellowCount = yellowTimeInit;
+int greenCount = greenTimeInit;
+
+
+const int changeToSecond = 1000;
+int redTime = redCount * changeToSecond;
+int yellowTime = yellowCount * changeToSecond;
+int greenTime = greenCount * changeToSecond;

@@ -8,6 +8,8 @@
 #ifndef INC_SOFTWARE_TIMER_H_
 #define INC_SOFTWARE_TIMER_H_
 
+#define TIMER_TICK 10 // chu ky cua ngat timer
+
 void setTimer(int index, int value);
 int isTimerExpired(int index);
 void timerRun();

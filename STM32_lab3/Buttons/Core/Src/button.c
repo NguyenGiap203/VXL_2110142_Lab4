@@ -6,49 +6,57 @@
  */
 
 #include "button.h"
+#include "main.h"
+#include "software_timer.h" // to use TIMER_TICK
 
-int button1_flag = 0;
+#define NO_OF_BUTTONS	3
+//timer interrupt duration is TIMER_TICK
+#define DURATION_FOR_AUTO_INCREASING	250/TIMER_TICK //1000ms
 
-int KeyReg0 = NORMAL_STATE;
-int KeyReg1 = NORMAL_STATE;
-int KeyReg2 = NORMAL_STATE;
+#define PRESSED_STATE	GPIO_PIN_RESET
+#define RELEASED_STATE	GPIO_PIN_SET
 
-int KeyReg3 = NORMAL_STATE; // Trang thai on dinh truoc do (su dung cho nhan de)
-int TimerForKeyPress = 200; // 2000ms
+// the buffer that the final result is stored after debouncing
+static GPIO_PinState buttonBuffer[NO_OF_BUTTONS];
+// we define three buffers for debouncing
+static GPIO_PinState debounceBuffer1[NO_OF_BUTTONS];
+static GPIO_PinState debounceBuffer2[NO_OF_BUTTONS];
+static GPIO_PinState debounceBuffer3[NO_OF_BUTTONS];
 
-int isButton1Pressed(){
-	if(button1_flag == 1){
-		button1_flag = 0;
+static GPIO_TypeDef* ButtonPorts[NO_OF_BUTTONS] = {BUT1_GPIO_Port, BUT2_GPIO_Port, BUT3_GPIO_Port};
+static uint16_t ButtonPins[NO_OF_BUTTONS] = {BUT1_Pin, BUT2_Pin, BUT3_Pin};
+
+uint8_t button_flag[NO_OF_BUTTONS] = {0};
+
+int counterAutoIncresing[NO_OF_BUTTONS] = {0};
+
+int isButtonPressed(int index){
+	if(button_flag[index] == 1){
+		button_flag[index] = 0;
 		return 1;
 	}
 	return 0;
 }
 
-void subKeyProcess(){
-	//TODO
-	button1_flag = 1;
-}
-
 void getKeyInput(){
-	KeyReg0 = KeyReg1;
-	KeyReg1 = KeyReg2;
-	KeyReg2 = HAL_GPIO_ReadPin(Button1_GPIO_Port, Button1_Pin);
-	if((KeyReg0 == KeyReg1) && (KeyReg1 == KeyReg2)){
-		if(KeyReg3 != KeyReg2){
-			KeyReg3 = KeyReg2;
-			if(KeyReg2 == PRESSED_STATE){
-				//TODO
-				subKeyProcess();
-				TimerForKeyPress = 200;
-			}
-		}else{
-			TimerForKeyPress--;
-			if(TimerForKeyPress == 0){
-				//TODO
-				if(KeyReg2 == PRESSED_STATE){
-					subKeyProcess();
+	for(int i = 0; i < NO_OF_BUTTONS; i++){
+		debounceBuffer1[i] = debounceBuffer2[i];
+		debounceBuffer2[i] = debounceBuffer3[i];
+		debounceBuffer3[i] = HAL_GPIO_ReadPin(ButtonPorts[i], ButtonPins[i]);
+
+		if((debounceBuffer1[i] == debounceBuffer2[i]) && (debounceBuffer2[i] == debounceBuffer3[i])){
+			if(buttonBuffer[i] != debounceBuffer3[i]){
+				buttonBuffer[i] = debounceBuffer3[i];
+				if(buttonBuffer[i] == PRESSED_STATE){
+					button_flag[i] = 1;
+					counterAutoIncresing[i] = 0;
 				}
-				TimerForKeyPress = 200;
+			} else {
+				counterAutoIncresing[i]++;
+				if(counterAutoIncresing[i] >= DURATION_FOR_AUTO_INCREASING){
+					buttonBuffer[i] = RELEASED_STATE;
+					counterAutoIncresing[i] = 0;
+				}
 			}
 		}
 	}

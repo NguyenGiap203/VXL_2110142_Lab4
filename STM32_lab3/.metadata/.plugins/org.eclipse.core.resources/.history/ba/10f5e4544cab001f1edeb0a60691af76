@@ -1,0 +1,85 @@
+/*
+ * fsm_automatic.c
+ *
+ *  Created on: Nov 11, 2024
+ *      Author: NGUYEN GIAP
+ */
+
+#include "fsm_automatic.h"
+
+void fsm_automatic(){
+	switch(status){
+	case INIT:
+		//TODO
+		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GRE1_GPIO_Port, GRE1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(YEL1_GPIO_Port, YEL1_Pin, GPIO_PIN_SET);
+
+//		status = AUTO_RED;
+		setTimer(0, 5000);
+		status = AUTO_RED;
+		break;
+	case RED_GREEN:
+		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GRE1_GPIO_Port, GRE1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(YEL1_GPIO_Port, YEL1_Pin, GPIO_PIN_SET);
+//		display7SEG(-1);
+		if(isTimerExpired(0) == 1){
+			status = AUTO_GREEN;
+			setTimer(0, 3000);
+		}
+		if(isButtonPressed(0) == 1){
+			status = MAN_RED;
+			setTimer(0, 10000);
+		}
+		break;
+	case AUTO_GREEN:
+		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GRE1_GPIO_Port, GRE1_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(YEL1_GPIO_Port, YEL1_Pin, GPIO_PIN_SET);
+		if(isTimerExpired(0) == 1){
+			status = AUTO_YELLOW;
+			setTimer(0, 2000);
+		}
+		break;
+	case AUTO_YELLOW:
+		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GRE1_GPIO_Port, GRE1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(YEL1_GPIO_Port, YEL1_Pin, GPIO_PIN_RESET);
+
+		if(isTimerExpired(0) == 1){
+			status = AUTO_RED;
+			setTimer(0, 5000);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void fsm_automatic(){
+	switch(status){
+	case INIT:
+		clearAllLeds();
+
+		status = RED_GREEN;
+		setTimer(1, redTime);
+		setTimer(2, greenTime);
+		break;
+	case RED_GREEN:
+		setRed1();
+		setGreen2();
+
+		status = RED_YELLOW;
+		setTimer(2, yelowTime);
+		break;
+	case RED_YELLOW:
+		break;
+	case GREEN_RED:
+		break;
+	case YELLOW_RED:
+		break;
+	default:
+		break;
+	}
+}

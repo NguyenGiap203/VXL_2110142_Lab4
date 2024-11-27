@@ -1,0 +1,18 @@
+/*
+ * global.c
+ *
+ *  Created on: Nov 11, 2024
+ *      Author: NGUYEN GIAP
+ */
+
+#include "global.h"
+int status = 0;
+
+const int redTimeInit = 5;
+const int yellowTimeInit = 2;
+const int greenTimeInit = 3;
+
+
+int redTime = redTimeInit;
+int yellowTime = yellowTimeInit;
+int greenTime = greenTimeInit;

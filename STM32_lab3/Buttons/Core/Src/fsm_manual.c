@@ -6,39 +6,39 @@
  */
 
 #include "fsm_manual.h"
-
-void fsm_manual(){
-	switch(status){
-	case MAN_RED:
-		HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, GPIO_PIN_SET);
-
-		if(isTimerExpired(0) == 1){
-			status = AUTO_RED;
-			setTimer(0, 5000);
-		}
-		if(isButton1Pressed() == 1){
-			status = MAN_GREEN;
-			setTimer(0, 10000);
-		}
-		break;
-	case MAN_GREEN:
-//		HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
-//		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
-//		HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, GPIO_PIN_SET);
+//
+//void fsm_manual(){
+//	switch(status){
+//	case MAN_RED:
+//		HAL_GPIO_WritePin(RED1_GPIO_Port, RED1_Pin, GPIO_PIN_RESET);
+//		HAL_GPIO_WritePin(GRE1_GPIO_Port, GRE1_Pin, GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(YEL1_GPIO_Port, YEL1_Pin, GPIO_PIN_SET);
 //
 //		if(isTimerExpired(0) == 1){
 //			status = AUTO_RED;
 //			setTimer(0, 5000);
 //		}
-//		if(isButton1Pressed() == 1){
+//		if(isButtonPressed(0) == 1){
 //			status = MAN_GREEN;
+//			setTimer(0, 10000);
 //		}
-		break;
-	case MAN_YELLOW:
-		break;
-	default:
-		break;
-	}
-}
+//		break;
+//	case MAN_GREEN:
+////		HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
+////		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
+////		HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, GPIO_PIN_SET);
+////
+////		if(isTimerExpired(0) == 1){
+////			status = AUTO_RED;
+////			setTimer(0, 5000);
+////		}
+////		if(isButton1Pressed() == 1){
+////			status = MAN_GREEN;
+////		}
+//		break;
+//	case MAN_YELLOW:
+//		break;
+//	default:
+//		break;
+//	}
+//}
